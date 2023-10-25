@@ -1,0 +1,10 @@
+services:
+  mpi-app:
+    build:
+      context: .
+    image: mpi-app
+    command: bash
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./code:/home/mpiuser/code

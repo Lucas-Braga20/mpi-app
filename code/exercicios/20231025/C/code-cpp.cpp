@@ -20,9 +20,9 @@ int main(int argc, char *argv[]) {
     MPI_Comm_size(MPI_COMM_WORLD, &num_processadores);
     MPI_Comm_rank(MPI_COMM_WORLD, &posicao);
 
+    //
     // Primeira etapa.
     //
-    // Recepção dos dados e comunicação.
     if (posicao == 0) {
         FILE *arquivo;
 
@@ -54,18 +54,16 @@ int main(int argc, char *argv[]) {
         MPI_Recv(&valor, 1, MPI_INT, 0, TAG, MPI_COMM_WORLD, &status);
     }
 
+    //
     // Segunda etapa.
     //
-    // Todos os processadores irão alocar a entrada local (Sub divisão da entrada).
-    // A sub-divisão é feita a oartir MPI_Scatter.
     entrada_local = new int[valor / num_processadores];
 
     MPI_Scatter(entrada_geral, valor / num_processadores, MPI_INT, entrada_local, valor / num_processadores, MPI_INT, 0, MPI_COMM_WORLD);
 
+    //
     // Terceira etapa.
     //
-    // Esta é uma etapa de computação interna. Todos os processadores
-    // verificam o maior valor no sub-conjunto.
     maior = entrada_local[0];
 
     for (int i = 1; i < (valor / num_processadores); i++) {
@@ -74,11 +72,9 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    //
     // Quarta etapa.
     //
-    // Na quarta etapa, o primeiro processador irá 
-    // receber o maior valor interno dos demais processadores
-    // e verificar o maior valor entre eles.
     if (posicao == 0) {
         maiores[0] = maior;
 
@@ -95,7 +91,7 @@ int main(int argc, char *argv[]) {
         }
 
         printf("\nMaior valor do conjunto: %d.\n", maior);
-        
+
         delete(entrada_geral);
         delete(maiores);
     }

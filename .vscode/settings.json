@@ -1,0 +1,15 @@
+{
+    "explorer.compactFolders": false,
+    "C_Cpp.errorSquiggles": "enabled",
+    "files.associations": {
+        "vector": "cpp",
+        "array": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "utility": "cpp"
+    },
+    "code-runner.executorMap": {
+        "cpp": "./.vscode/code_runner.sh"
+    },
+    "code-runner.runInTerminal": true,
+}
